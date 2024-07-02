@@ -1,0 +1,32 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    dnf:
+      name: httpd 
+  - name: Install PHP and necessary modules 
+    dnf:
+      name: 
+        - php
+        - php-mysqlnd
+      state: present
+
+  - name: Create PHP info file
+    copy:
+      dest: /var/www/html/info.php
+      content: "<?php phpinfo(); ?>"
+
+  - name: Start and enable Apache service
+    systemd:
+      name: httpd
+      state: restarted
+      enabled: yes
+    
+  handlers:
+  - name: Restart Apache
+    systemd:
+        name: httpd
+        state: restarted

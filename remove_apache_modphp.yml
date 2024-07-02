@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    dnf:
+      name: httpd 
+      state: absent
+
+  - name: Install PHP and necessary modules 
+    dnf:
+      name: 
+        - php
+        - php-mysqlnd
+      state: absent 
